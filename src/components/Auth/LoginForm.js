@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {FormContainer, Input, SubmitButton} from "./FormStyles";
-import {login} from "../../../apis/service/auth";
+import {login} from "../../apis/service/auth";
 import {useNavigate} from "react-router-dom";
-import {CLIENT_PATHS} from "../../../constants/path";
+import {CLIENT_PATHS} from "../../constants/path";
 import {useSetRecoilState} from "recoil";
-import {authState} from "../../../recoil/auth";
+import {authState} from "../../recoil/auth";
 
 const LoginForm = () => {
 

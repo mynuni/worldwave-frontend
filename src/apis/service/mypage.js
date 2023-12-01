@@ -1,7 +1,7 @@
 import {privateApi} from "../api";
 
 export const getMyComments = async (page) => {
-    const response = await privateApi.get(`/mypage/comments?page=${page}&size=10`);
+    const response = await privateApi.get(`/mypage/comments?page=${page}`);
     return response.data;
 }
 

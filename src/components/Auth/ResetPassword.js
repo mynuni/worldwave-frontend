@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import {PageLayout} from "../../../pages/Login/LoginPage.styles";
-import {Container} from "../../../pages/SignUp/SignUpPage.styles";
+import {PageLayout} from "../../pages/Login/LoginPage.styles";
+import {Container} from "../../pages/SignUp/SignUpPage.styles";
 import {CircularProgress, TextField} from "@mui/material";
 import styled from "styled-components";
-import Button from "../../common/Button/Button";
-import Logo from "../../common/Logo/Logo";
-import COLOR from "../../../constants/color";
-import Text from "../../common/Text/Text";
+import Button from "../common/Button/Button";
+import Logo from "../common/Logo/Logo";
+import COLOR from "../../constants/color";
+import Text from "../common/Text/Text";
 import {SubmitButton} from "./FormStyles";
-import useValidation from "../../../hooks/useValidation";
-import {resetPassword, sendVerificationCode} from "../../../apis/service/auth";
+import useValidation from "../../hooks/useValidation";
+import {resetPassword, sendVerificationCode} from "../../apis/service/auth";
 import {useNavigate} from "react-router-dom";
-import {CLIENT_PATHS} from "../../../constants/path";
+import {CLIENT_PATHS} from "../../constants/path";
 
 const ResetPassword = () => {
 

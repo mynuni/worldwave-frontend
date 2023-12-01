@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {CircularProgress, TextField} from "@mui/material";
-import {sendVerificationCode} from "../../../apis/service/auth";
-import Text from "../../common/Text/Text";
-import Button from "../../common/Button/Button";
-import useValidation from "../../../hooks/useValidation";
+import {sendVerificationCode} from "../../apis/service/auth";
+import Text from "../common/Text/Text";
+import Button from "../common/Button/Button";
+import useValidation from "../../hooks/useValidation";
 import {sendButtonStyle} from "./SignUpForm";
 
 const EmailStep = ({formData, onChange, handleNextStep}) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
-import COLOR from "../../../constants/color";
-import {CLIENT_PATHS} from "../../../constants/path";
+import COLOR from "../../constants/color";
+import {CLIENT_PATHS} from "../../constants/path";
 
 const FormFooter = () => {
     return (

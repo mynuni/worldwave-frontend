@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import Text from "../../common/Text/Text";
+import Text from "../common/Text/Text";
 import {CircularProgress, TextField} from "@mui/material";
-import Button from "../../common/Button/Button";
-import {confirmCode} from "../../../apis/service/auth";
+import Button from "../common/Button/Button";
+import {confirmCode} from "../../apis/service/auth";
 import {InfoTextContainer, sendButtonStyle} from "./SignUpForm";
 
 const CodeStep = ({formData, onBlur, handleNextStep}) => {

@@ -3,9 +3,9 @@ import {LoginContainer, PageLayout} from "./LoginPage.styles";
 import Logo from "../../components/common/Logo/Logo";
 import Text from "../../components/common/Text/Text";
 import HorizonLine from "../../components/common/HorizonLine/HorizonLine";
-import LoginForm from "../../components/Auth/form/LoginForm";
+import LoginForm from "../../components/Auth/LoginForm";
 import GoogleLoginButton from "../../components/common/LoginButton/GoogleLoginButton";
-import FormFooter from "../../components/Auth/form/FormFooter";
+import FormFooter from "../../components/Auth/FormFooter";
 
 const LoginPage = () => {
     return (

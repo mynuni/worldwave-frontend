@@ -7,7 +7,7 @@ import GoogleLoginButton from "../../components/common/LoginButton/GoogleLoginBu
 import EmailLoginButton from "../../components/common/LoginButton/EmailLoginButton";
 import Logo from "../../components/common/Logo/Logo";
 import {Container, IntroContainer, introStyles, LoginContainer, LogoWrap, PageLayout} from "./HomePage.styles";
-import FormFooter from "../../components/Auth/form/FormFooter";
+import FormFooter from "../../components/Auth/FormFooter";
 import {FooterWrap} from "../Login/LoginPage.styles";
 
 const HomePage = () => {

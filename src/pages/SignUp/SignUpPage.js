@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, PageLayout} from "./SignUpPage.styles";
 import Logo from "../../components/common/Logo/Logo";
 import Text from "../../components/common/Text/Text";
-import SignUpForm from "../../components/Auth/form/SignUpForm";
+import SignUpForm from "../../components/Auth/SignUpForm";
 import GoogleLoginButton from "../../components/common/LoginButton/GoogleLoginButton";
 import HorizonLine from "../../components/common/HorizonLine/HorizonLine";
 

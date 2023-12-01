@@ -7,9 +7,9 @@ export const Container = styled.div`
 `;
 
 export const SectionContainer = styled.div`
-  width: 800px;
-  padding: 20px;
+  width: 1000px;
   height: 100%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;

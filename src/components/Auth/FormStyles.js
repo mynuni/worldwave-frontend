@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import COLOR from "../../../constants/color";
-import Button from "../../common/Button/Button";
+import COLOR from "../../constants/color";
+import Button from "../common/Button/Button";
 import {TextField} from "@mui/material";
 
 export const FormContainer = styled.div`

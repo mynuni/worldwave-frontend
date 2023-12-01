@@ -3,7 +3,7 @@ import styled from "styled-components";
 import EmailStep from "./EmailStep";
 import CodeStep from "./CodeStep";
 import InfoStep from "./InfoStep";
-import COLOR from "../../../constants/color";
+import COLOR from "../../constants/color";
 
 const SignUpForm = () => {
 

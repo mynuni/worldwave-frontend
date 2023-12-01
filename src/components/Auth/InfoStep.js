@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import Text from "../../common/Text/Text";
+import Text from "../common/Text/Text";
 import {Autocomplete, Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
-import {COUNTRIES} from "../../../constants/country";
-import Button from "../../common/Button/Button";
+import {COUNTRIES} from "../../constants/country";
+import Button from "../common/Button/Button";
 import {sendButtonStyle} from "./SignUpForm";
-import {signUp} from "../../../apis/service/auth";
+import {signUp} from "../../apis/service/auth";
 import {useNavigate} from "react-router-dom";
-import {CLIENT_PATHS} from "../../../constants/path";
-import useValidation from "../../../hooks/useValidation";
+import {CLIENT_PATHS} from "../../constants/path";
+import useValidation from "../../hooks/useValidation";
 
 const InfoStep = ({formData, setFormData, onChange, onBlur}) => {
     const [isLoading, setIsLoading] = useState(false);
