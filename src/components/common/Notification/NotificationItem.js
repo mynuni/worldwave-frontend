@@ -19,7 +19,7 @@ const NotificationItem = ({activity, refetch}) => {
         actionMemberId,
         actionMemberNickname,
         actionMemberProfileImage,
-        isRead,
+        read,
         createdAt
     } = activity;
 
@@ -31,7 +31,7 @@ const NotificationItem = ({activity, refetch}) => {
     });
 
     return (
-        <Container isread={isRead} onClick={() => {
+        <Container read={read} onClick={() => {
             open();
             readActivityMutation(id);
         }}>
@@ -67,7 +67,7 @@ const Container = styled.div`
   padding: 0 10px;
   cursor: pointer;
   gap: 10px;
-  background-color: ${({isread}) => isread ? COLOR.WHITE : "#edf5fa"};
+  background-color: ${({read}) => read ? COLOR.WHITE : "#edf5fa"};
 
   &:hover {
     background-color: lightgray;

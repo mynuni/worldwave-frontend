@@ -7,7 +7,9 @@ import {Tooltip} from "@mui/material";
 import {useRecoilValue} from "recoil";
 import {userState} from "../../../recoil/user";
 import {LuDot} from "react-icons/lu";
-import { MdOutlineFiberNew } from "react-icons/md";
+import {MdOutlineFiberNew} from "react-icons/md";
+import {privateApi} from "../../../apis/api";
+import {getUnreadNotificationCount} from "../../../apis/service/member";
 
 
 const Notification = () => {
@@ -42,14 +44,28 @@ const Notification = () => {
         };
     }, [user.id]);
 
+    useEffect(() => {
+        getUnreadNotificationCount()
+            .then((response) => {
+                setHasNewNotification(response > 0);
+                setNotification(response > 0 ? `읽지 않은 ${response}개의 알림이 있습니다.` : "");
+                setTimeout(() => {
+                    setNotification("");
+                }, 1500);
+            });
+    }, []);
 
     return (
         <Container ref={dropdownRef}>
             <Tooltip title={notification} arrow open={!!notification}>
                 {hasNewNotification && (
-                    <MdOutlineFiberNew style={{color: "red", fontSize: "30px", position: "absolute", top: "-10", left: "18"}} />
+                    <MdOutlineFiberNew
+                        style={{color: "red", fontSize: "30px", position: "absolute", top: "-10", left: "18"}}/>
                 )}
-                <NotificationIcon onClick={() => {toggleDropdown(); setHasNewNotification(false)}}/>
+                <NotificationIcon onClick={() => {
+                    toggleDropdown();
+                    setHasNewNotification(false);
+                }}/>
                 {isOpen && (<ActivityDropdown/>)}
             </Tooltip>
         </Container>
