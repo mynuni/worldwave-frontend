@@ -29,4 +29,7 @@ export const modalStyle = {
     backgroundColor: COLOR.WHITE,
     borderRadius: 2,
     boxShadow: 12,
+    '&:focus': {
+        outline: 'none',
+    },
 };
