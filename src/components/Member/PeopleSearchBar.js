@@ -100,6 +100,7 @@ export default PeopleSearchBar;
 
 const Container = styled.div`
   width: 300px;
+  min-width: 300px;
   height: 430px;
   border: 1px solid ${COLOR.GRAY_300};
   background-color: white;
