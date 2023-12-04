@@ -46,7 +46,7 @@ const NavigationBar = () => {
                         src={process.env.REACT_APP_STATIC_IMAGES_BASE_URL + user.profileImgPath}
                         onClick={handleDropdownClick}/>
                     <DropDownMenuGroup isOpen={isDropdownOpen}>
-                        <DropdownMenu onClick={handleMenuClick} to={CLIENT_PATHS.MYPAGE_HOME}>MY</DropdownMenu>
+                        <DropdownMenu onClick={handleMenuClick} to={CLIENT_PATHS.MYPAGE_HOME}>내 정보</DropdownMenu>
                         <DropdownMenu onClick={() => window.confirm("로그아웃 하시겠습니까?") && logout()}>로그아웃</DropdownMenu>
                     </DropDownMenuGroup>
                 </DropdownContainer>

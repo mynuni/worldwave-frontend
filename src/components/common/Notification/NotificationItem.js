@@ -5,22 +5,26 @@ import COLOR from "../../../constants/color";
 import useTimeConvert from "../../../hooks/useTimeConvert";
 import useModal from "../../../hooks/useModal";
 import MemberDetailModal from "../../Member/MemberDetailModal";
-import {useMutation} from "react-query";
-import {readActivity, readAllActivities} from "../../../apis/service/member";
+import {useMutation, useQuery} from "react-query";
+import {readActivity} from "../../../apis/service/member";
+import PostCard from "../../Feed/PostCard";
+import {getPost} from "../../../apis/service/feed";
+import {useNavigate} from "react-router-dom";
 
-const NotificationItem = ({activity, refetch}) => {
+const NotificationItem = ({activity, close: closeDropdown, refetch}) => {
 
     const time = useTimeConvert(activity.createdAt);
     const {Modal, open, isOpen, close} = useModal();
+    const navigate = useNavigate();
 
     const {
-        id,
+        id: activityId,
+        targetId,
         activityType,
         actionMemberId,
         actionMemberNickname,
         actionMemberProfileImage,
         read,
-        createdAt
     } = activity;
 
     const {mutate: readActivityMutation} = useMutation({
@@ -30,10 +34,33 @@ const NotificationItem = ({activity, refetch}) => {
         }
     });
 
+    const handleClick = () => {
+        if (activityType === "FOLLOW") {
+            closeDropdown();
+            navigate(`/members/${actionMemberId}`);
+        } else if (activityType === "COMMENT" || activityType === "LIKE") {
+            refetchPost().then(() => {
+                open();
+            }).catch((error) => {
+                alert(error.response.data.message);
+            });
+        }
+
+        if (!read) {
+            readActivityMutation(activityId);
+        }
+    }
+
+    const {data: targetPost, refetch: refetchPost} = useQuery({
+        queryKey: ["post", targetId],
+        queryFn: () => getPost(targetId),
+        enabled: false
+    });
+
     return (
         <Container read={read} onClick={() => {
-            open();
-            readActivityMutation(id);
+            handleClick();
+            readActivityMutation(activityId);
         }}>
             <ProfileImageWrap>
                 <img src={"/images/" + actionMemberProfileImage} alt="profile"/>
@@ -53,6 +80,20 @@ const NotificationItem = ({activity, refetch}) => {
             {activityType === "FOLLOW" && (
                 <MemberDetailModal open={isOpen} handleClose={close} memberId={actionMemberId}/>
             )}
+            <Modal open={isOpen} handleClose={close}>
+                {targetPost && <PostCard
+                    id={targetPost.id}
+                    authorId={targetPost.authorId}
+                    authorNickname={targetPost.authorNickname}
+                    profileImage={targetPost.profileImage}
+                    content={targetPost.content}
+                    attachedFiles={targetPost.attachedFiles}
+                    likeCount={targetPost.likeCount}
+                    commentCount={targetPost.commentCount}
+                    liked={targetPost.liked}
+                    createdAt={targetPost.createdAt}
+                />}
+            </Modal>
         </Container>
     );
 };

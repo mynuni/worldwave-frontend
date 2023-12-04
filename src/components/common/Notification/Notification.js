@@ -6,11 +6,9 @@ import {IoNotificationsOutline} from "react-icons/io5";
 import {Tooltip} from "@mui/material";
 import {useRecoilValue} from "recoil";
 import {userState} from "../../../recoil/user";
-import {LuDot} from "react-icons/lu";
 import {MdOutlineFiberNew} from "react-icons/md";
-import {privateApi} from "../../../apis/api";
 import {getUnreadNotificationCount} from "../../../apis/service/member";
-
+import {EventSourcePolyfill} from 'event-source-polyfill';
 
 const Notification = () => {
     const user = useRecoilValue(userState);
@@ -18,31 +16,32 @@ const Notification = () => {
     const [notification, setNotification] = useState("");
     const [hasNewNotification, setHasNewNotification] = useState(false);
 
+    const handleNotification = (e) => {
+        setNotification(e.data);
+        setHasNewNotification(true);
+
+        setTimeout(() => {
+            setNotification("");
+        }, 1500);
+    };
+
     useEffect(() => {
-        const eventSource = new EventSource(`http://localhost:8080/api/notifications/subscribe/${user.id}`, {
+        if (!user) return;
+
+        const eventSource = new EventSourcePolyfill(process.env.REACT_APP_NOTIFIER_BASE_URL, {
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_STORAGE_KEY)}`,
+                Authorization: `Bearer ${localStorage.getItem(process.env.REACT_APP_ACCESS_TOKEN_STORAGE_KEY)}`,
             },
             withCredentials: true,
         });
 
-        const handleNotification = (e) => {
-            setNotification(e.data);
-            setHasNewNotification(true);
-
-            setTimeout(() => {
-                setNotification("");
-            }, 1500);
-
-        };
-
         eventSource.addEventListener("notification", handleNotification);
 
         return () => {
-            eventSource.removeEventListener("notification", handleNotification);
             eventSource.close();
         };
-    }, [user.id]);
+
+    }, [user]);
 
     useEffect(() => {
         getUnreadNotificationCount()
@@ -66,7 +65,7 @@ const Notification = () => {
                     toggleDropdown();
                     setHasNewNotification(false);
                 }}/>
-                {isOpen && (<ActivityDropdown/>)}
+                {isOpen && (<ActivityDropdown close={toggleDropdown}/>)}
             </Tooltip>
         </Container>
     );
