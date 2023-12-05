@@ -13,7 +13,7 @@ import FollowList from "../Follow/FollowList";
 import useFollow from "../../hooks/query/useFollow";
 import {useNavigate} from "react-router-dom";
 import {CLIENT_PATHS} from "../../constants/path";
-import {getKoreanLabel, useCountryNameConvert, useGenderConvert} from "../../hooks/useProfileConvert";
+import {getKoreanLabel, useGenderConvert} from "../../hooks/useProfileConvert";
 
 const MemberProfile = ({memberId, children}) => {
 
@@ -103,7 +103,6 @@ const MemberProfile = ({memberId, children}) => {
                                 :
                                 <ButtonContainer>
                                     <Button onClick={() => navigate(CLIENT_PATHS.MYPAGE_MODIFY)} styles={buttonStyle}>정보 수정</Button>
-                                    <Button onClick={() => navigate(CLIENT_PATHS.MANAGE_POST)} styles={buttonStyle}>게시글 관리</Button>
                                 </ButtonContainer>}
                         </FollowButtonWrap>
                     </ProfileDetailsContainer>
@@ -171,7 +170,7 @@ const FollowWrap = styled.div`
 `;
 
 const FollowButtonWrap = styled.div`
-  width: 180px;
+  width: 100%;
   height: 40px;
   display: flex;
   justify-content: center;
@@ -182,7 +181,7 @@ const FollowButtonWrap = styled.div`
 const FollowButton = styled(Button)`
   width: 100%;
   height: 100%;
-  background-color: ${props => props.followed ? COLOR.GRAY_300 : COLOR.BLUE};
+  background-color: ${props => props.followed ? COLOR.GRAY_200 : COLOR.BLUE};
   color: ${props => props.followed ? COLOR.WHITE : COLOR.WHITE};
 `;
 
@@ -201,12 +200,16 @@ const ButtonContainer = styled.div`
 `;
 
 const buttonStyle = {
-    width: "100px",
+    width: "100%",
     height: "40px",
     borderRadius: "6px",
     fontSize: "14px",
     cursor: "pointer",
     outline: "none",
-    color: COLOR.WHITE,
-    backgroundColor: COLOR.GRAY_300,
+    border: `1px solid ${COLOR.GRAY_200}`,
+    color: COLOR.BLACK_100,
+    backgroundColor: COLOR.WHITE,
+    "&:hover": {
+        backgroundColor: COLOR.GRAY_100
+    }
 }

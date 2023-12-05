@@ -4,12 +4,11 @@ import NotificationItem from "../Notification/NotificationItem";
 import {useMutation, useQuery} from "react-query";
 import {getActivities, readAllActivities} from "../../../apis/service/member";
 import {useRecoilValue} from "recoil";
-import {LuDot} from "react-icons/lu";
 import {userState} from "../../../recoil/user";
 import Text from "../Text/Text";
 import COLOR from "../../../constants/color";
 
-const ActivityDropdown = () => {
+const ActivityDropdown = ({close}) => {
 
     const user = useRecoilValue(userState);
 
@@ -33,9 +32,19 @@ const ActivityDropdown = () => {
                 }} size={"small"} styles={{color: COLOR.BLUE}}>모두 읽음으로 표시</Text>
             </TextWrap>
             <ActivityItemContainer>
-                {activities?.content?.map((activity) => (
+                {activities?.length === 0 && (
+                    <Text size={"small"} styles={{
+                        color: COLOR.GRAY_400,
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)"
+                    }}>최근 알림이 없습니다.</Text>
+                )}
+                {activities?.map((activity) => (
                     <NotificationItem key={activity.id}
                                       refetch={refetch}
+                                      close={close}
                                       activity={activity}/>
                 ))}
             </ActivityItemContainer>
@@ -58,6 +67,7 @@ const Container = styled.div`
 `;
 
 const ActivityItemContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 260px;
   overflow-y: scroll;

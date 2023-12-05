@@ -1,20 +1,24 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import COLOR from "../../constants/color";
 import Text from "../common/Text/Text";
 import {useMutation, useQueryClient} from "react-query";
 import {toggleFollow} from "../../apis/service/member";
-import {useCountryNameConvert, useGenderConvert} from "../../hooks/useProfileConvert";
+import {getKorName, useGenderConvert} from "../../hooks/useProfileConvert";
 import {useRecoilValue} from "recoil";
-import {userSelector, userState} from "../../recoil/user";
+import {userSelector} from "../../recoil/user";
+import {useNavigate} from "react-router-dom";
+import {CLIENT_PATHS} from "../../constants/path";
 
 const MemberCard = (props) => {
 
     const {memberId, nickname, country, gender, ageRange, followed, profileImage, successCallback} = props;
 
+    const navigate = useNavigate();
     const userState = useRecoilValue(userSelector);
     const queryClient = useQueryClient();
-    const countryLabel = useCountryNameConvert(country);
+    const countryLabel = getKorName(country);
+
     const genderLabel = useGenderConvert(gender);
     const toggleFollowMutation = useMutation({
         mutationKey: ["toggleFollow", memberId],
@@ -35,7 +39,7 @@ const MemberCard = (props) => {
 
     return (
         <Container>
-            <ProfileImageWrap>
+            <ProfileImageWrap onClick={() => navigate(CLIENT_PATHS.MEMBER + memberId)}>
                 <img
                     className={"profile-image"}
                     src={profileImage ? `/images/${profileImage}` : "/images/default-profile-image.png"}
@@ -50,7 +54,8 @@ const MemberCard = (props) => {
                     alt=""
                 />
             </ProfileImageWrap>
-            <Text bold>{nickname}</Text>
+            <Text bold styles={{cursor: "pointer"}}
+                  onClick={() => navigate(CLIENT_PATHS.MEMBER + memberId)}>{nickname}</Text>
             <Text size={"medium"}>{countryLabel ? countryLabel : "기타 국적"}</Text>
             <Text size={"medium"}>{ageRange ? ageRange + "대" : "나이 비공개"}</Text>
             <Text size={"medium"}>{genderLabel ? genderLabel : "성별 비공개"}</Text>
@@ -94,6 +99,7 @@ const ProfileImageWrap = styled.div`
   height: 100px;
   border-radius: 50%;
   margin: 10px 0;
+  cursor: pointer;
 
   .profile-image {
     width: 100%;

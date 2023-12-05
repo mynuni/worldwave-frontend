@@ -43,7 +43,7 @@ const NavigationBar = () => {
                 <NavMenu to={CLIENT_PATHS.PEOPLE}>PEOPLE</NavMenu>
                 <DropdownContainer ref={dropdownRef}>
                     <DropDownButton
-                        src={process.env.REACT_APP_STATIC_IMAGES_BASE_URL + user.profileImgPath}
+                        src={process.env.REACT_APP_STATIC_IMAGES_BASE_URL + user?.profileImgPath}
                         onClick={handleDropdownClick}/>
                     <DropDownMenuGroup isOpen={isDropdownOpen}>
                         <DropdownMenu onClick={handleMenuClick} to={CLIENT_PATHS.MYPAGE_HOME}>내 정보</DropdownMenu>
