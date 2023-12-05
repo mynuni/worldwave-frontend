@@ -3,7 +3,6 @@ import SideBar from "../../components/Member/SideBar";
 import {Container} from "./MyPage.styles";
 import Section from "../../components/Member/Section";
 import {useParams} from "react-router-dom";
-import WithdrawForm from "../../components/MyPage/WithdrawForm";
 
 const MyPage = () => {
 
