@@ -11,10 +11,11 @@ export const getMemberDetail = async (id) => {
 }
 
 export const searchMembers = async (searchParam) => {
-    const {page, country, gender, ageRange, nickname, hideFollowers} = searchParam;
+    const {page, size, country, gender, ageRange, nickname, hideFollowers} = searchParam;
     const response = await privateApi.get("/members/search", {
         params: {
             page: page,
+            size: size,
             country: country,
             gender: gender,
             ageRange: ageRange,
@@ -46,6 +47,11 @@ export const changePassword = async (passwordChangeData) => {
 
 export const getActivities = async (memberId) => {
     const response = await privateApi.get(`/activities/${memberId}`);
+    return response.data;
+}
+
+export const getUnreadNotificationCount = async () => {
+    const response = await privateApi.get("/activities/unread-count");
     return response.data;
 }
 

@@ -21,6 +21,11 @@ export const signUp = async (signUpData) => {
     return response.data;
 }
 
+export const oAuth2SignUp = async (oAuth2SignUpData) => {
+    const response = await publicApi.post(API_PATHS.OAUTH2_SIGN_UP, oAuth2SignUpData);
+    return response.data;
+}
+
 export const login = async (email, password) => {
     const response = await publicApi.post(PATH.LOGIN, {email, password});
     return response.data;
