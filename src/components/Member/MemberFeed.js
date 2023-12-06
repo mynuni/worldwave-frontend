@@ -28,13 +28,6 @@ const MemberFeed = ({memberId}) => {
         }
     };
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
-
     return (
         <InfiniteScroll
             pageStart={0}
@@ -42,6 +35,7 @@ const MemberFeed = ({memberId}) => {
             hasMore={hasNextPage}
             loader={<CircularProgress/>}
         >
+            {isLoading && <CircularProgress/>}
             <FeedContainer>
                 {data?.pages.map((page) => (
                     <React.Fragment key={page.number}>
@@ -76,5 +70,5 @@ export const FeedContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-
+  gap: 20px;
 `;

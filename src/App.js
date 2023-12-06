@@ -11,11 +11,12 @@ import SignUpPage from "./pages/SignUp/SignUpPage";
 import LoginPage from "./pages/Login/LoginPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import {QueryClient, QueryClientProvider} from "react-query";
-import ResetPassword from "./components/Auth/form/ResetPassword";
+import ResetPassword from "./components/Auth/ResetPassword";
 import PeoplePage from "./pages/People/PeoplePage";
-import LoginSuccess from "./components/Auth/form/LoginSuccess";
+import LoginSuccess from "./components/Auth/LoginSuccess";
 import MyPage from "./pages/MyPage/MyPage";
 import MemberPage from "./pages/Member/MemberPage";
+import OAuth2SignUpPage from "./pages/SignUp/OAuth2SignUpPage";
 
 const App = () => {
 
@@ -31,11 +32,12 @@ const App = () => {
                         <Route path={CLIENT_PATHS.LOGIN} element={<LoginPage/>}/>
                         <Route path={CLIENT_PATHS.LOGIN_SUCCESS} element={<LoginSuccess/>}/>
                         <Route path={CLIENT_PATHS.SIGN_UP} element={<SignUpPage/>}/>
+                        <Route path={CLIENT_PATHS.OAUTH2_SIGN_UP} element={<OAuth2SignUpPage/>}/>
                         <Route path={CLIENT_PATHS.RESET_PASSWORD} element={<ResetPassword/>}/>
                     </Route>
                     <Route element={<ProtectedRoute/>}>
                         <Route element={<NavLayout/>}>
-                            <Route path={"/mypage/:page"} element={<MyPage/>}/>
+                            <Route path={CLIENT_PATHS.MYPAGE} element={<MyPage/>}/>
                             <Route path={CLIENT_PATHS.EXPLORE} element={<ExplorePage/>}/>
                             <Route path={CLIENT_PATHS.MEMBERS} element={<MemberPage/>}/>
                             <Route path={CLIENT_PATHS.FEED} element={<FeedPage/>}/>

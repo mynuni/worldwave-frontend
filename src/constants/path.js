@@ -15,6 +15,7 @@ export const CLIENT_PATHS = {
     LOGIN: "/login",
     LOGIN_SUCCESS: "/oauth2/redirect",
     SIGN_UP: "/sign-up",
+    OAUTH2_SIGN_UP: "/sign-up/oauth2",
     RESET_PASSWORD: "/help/reset-password",
     EXPLORE: "/explore",
     FEED: "/feeds",
@@ -23,6 +24,7 @@ export const CLIENT_PATHS = {
     MEMBERS: "/members/:memberId",
     MANAGE_COMMENT: "/mypage/comment",
     MANAGE_LIKE: "/mypage/like",
+    MYPAGE: "/mypage/:page",
     MYPAGE_HOME: "/mypage/home",
     MYPAGE_MODIFY: "/mypage/modify",
     MYPAGE_WITHDRAW: "/mypage/withdraw",
@@ -30,6 +32,7 @@ export const CLIENT_PATHS = {
 
 export const API_PATHS = {
     LOGOUT: "/auth/logout",
+    OAUTH2_SIGN_UP: "/members/sign-up/oauth2",
     REFRESH_TOKEN: "/auth/token/refresh",
     SEND_PASSWORD_CHANGE_TOKEN: "/auth/help/reset-password",
     CHANGE_PASSWORD: "/auth/help/reset-password/confirm",

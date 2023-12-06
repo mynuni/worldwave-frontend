@@ -14,8 +14,6 @@ const PeoplePage = () => {
         hideFollowers: null,
     });
 
-    console.log(searchParams);
-
     const handleOptionChange = (name, value) => {
         setSearchParams({
             ...searchParams,

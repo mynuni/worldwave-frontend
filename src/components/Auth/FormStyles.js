@@ -18,14 +18,7 @@ export const SubmitButton = styled(Button)`
   background-color: ${COLOR.BLUE};
   color: ${COLOR.WHITE};
   transition: 0.2s ease;
-
-  &:hover {
-    filter: brightness(105%);
-  }
-
-  &:active {
-    filter: brightness(95%);
-  }
+  opacity: ${({disabled}) => disabled && "0.5"};
 `;
 
 export const Input = styled(TextField)`

@@ -36,6 +36,11 @@ const ResetPassword = () => {
     };
 
     const sendPasswordResetToken = async () => {
+        if(!passwordChangeData.email) {
+            alert("이메일을 입력해주세요.");
+            return;
+        }
+
         setIsLoading(true);
         try {
             await sendVerificationCode(passwordChangeData.email);
