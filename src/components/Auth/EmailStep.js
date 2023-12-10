@@ -9,27 +9,24 @@ import {sendButtonStyle} from "./SignUpForm";
 const EmailStep = ({formData, onChange, handleNextStep}) => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isEmailValid, setIsEmailValid] = useState(false);
     const {validateEmail, emailError} = useValidation();
-
-    const handleBlur = async () => {
-        setIsEmailValid(await validateEmail(formData.email));
-    }
 
     const handleSendCode = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
         try {
-            await sendVerificationCode(formData.email);
-            handleNextStep();
+            setIsLoading(true);
+            const isValid = await validateEmail(formData.email);
+            if (isValid) {
+                await sendVerificationCode(formData.email);
+                handleNextStep();
+            }
         } catch (error) {
             alert(error.response.data.message);
         } finally {
             setIsLoading(false);
         }
-
-    }
+    };
 
     return (
         <>
@@ -39,7 +36,6 @@ const EmailStep = ({formData, onChange, handleNextStep}) => {
             <TextField label="이메일"
                        name="email"
                        onChange={onChange}
-                       onBlur={handleBlur}
                        disabled={isLoading}
                        error={!!emailError}
                        helperText={emailError}
@@ -47,7 +43,7 @@ const EmailStep = ({formData, onChange, handleNextStep}) => {
             <Button type="submit"
                     onClick={handleSendCode}
                     isLoading={isLoading}
-                    disabled={isLoading || !isEmailValid}
+                    disabled={isLoading}
                     styles={sendButtonStyle}>
                 {isLoading ? <CircularProgress size={25} color="grey"/> : "인증 번호 전송"}
             </Button>
