@@ -41,6 +41,7 @@ export const API_PATHS = {
     WITHDRAW: "/members/withdraw",
     OAUTH2_USER_WITHDRAW: "/members/withdraw/oauth2",
     SUBSCRIBE_NOTIFICATION: "/api/notifications/subscribe",
+    LOGIN_GUEST: "/auth/login/guest",
 }
 
 export default PATHS;

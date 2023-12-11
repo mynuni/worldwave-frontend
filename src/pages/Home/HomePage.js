@@ -9,6 +9,7 @@ import Logo from "../../components/common/Logo/Logo";
 import {Container, IntroContainer, introStyles, LoginContainer, LogoWrap, PageLayout} from "./HomePage.styles";
 import FormFooter from "../../components/Auth/FormFooter";
 import {FooterWrap} from "../Login/LoginPage.styles";
+import GuestLoginButton from "../../components/common/LoginButton/GuestLoginButton";
 
 const HomePage = () => {
 
@@ -29,6 +30,7 @@ const HomePage = () => {
                     </LogoWrap>
                     <GoogleLoginButton/>
                     <EmailLoginButton/>
+                    <GuestLoginButton/>
                     <FooterWrap>
                         <FormFooter/>
                     </FooterWrap>

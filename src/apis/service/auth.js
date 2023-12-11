@@ -51,3 +51,8 @@ export const oAuth2UserWithdraw = async () => {
     const response = await privateApi.delete(API_PATHS.OAUTH2_USER_WITHDRAW);
     return response.data;
 }
+
+export const loginGuest = async () => {
+    const response = await publicApi.post(API_PATHS.LOGIN_GUEST);
+    return response.data;
+}
