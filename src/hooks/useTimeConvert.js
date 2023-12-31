@@ -15,7 +15,7 @@ const UseTimeConvert = (time) => {
         const months = Math.floor(days / 30);
         const years = Math.floor(days / 365);
 
-        if (seconds <= 5) {
+        if (seconds < 60) {
             setTimeAgo("방금 전");
         } else if (minutes <= 60) {
             setTimeAgo(`${minutes}분 전`);
