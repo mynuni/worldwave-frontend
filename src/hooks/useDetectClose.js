@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 
 const useDetectClose = (ref, initialState) => {
     const [isOpen, setIsOpen] = useState(initialState);
-    console.log(isOpen);
 
     useEffect(() => {
         const pageClickEvent = e => {

@@ -10,8 +10,9 @@ import {createChatRoom, getChatRooms} from "../../apis/service/talk";
 import {useQuery} from "react-query";
 import ChatRoomCreationForm from "./ChatRoomCreationForm";
 import {LoadingSpinner} from "../Explore/ExploreDetail";
+import {CircularProgress} from "@mui/material";
 
-const ChatRoomContainer = ({selectedChatRoom, handleChangeChatRoom, subscribeChatRoom}) => {
+const ChatRoomContainer = ({selectedChatRoom, setSelectedChatRoomData, handleChangeChatRoom, subscribeChatRoom, handleSendMessage, stompClientRef}) => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [filteredChatRooms, setFilteredChatRooms] = useState([]);
     const {Modal, isOpen, open, close} = useModal();
@@ -22,7 +23,7 @@ const ChatRoomContainer = ({selectedChatRoom, handleChangeChatRoom, subscribeCha
         onSuccess: (data) => {
             setFilteredChatRooms(data);
         },
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
     });
 
     const handleSearchChatRoom = (e) => {
@@ -42,7 +43,9 @@ const ChatRoomContainer = ({selectedChatRoom, handleChangeChatRoom, subscribeCha
         }
     }, [searchKeyword, chatRooms]);
 
-    if(isFetching) return <LoadingSpinner/>;
+    useEffect(() => {
+        refetchChatRooms();
+    }, [selectedChatRoom]);
 
     return (
         <Container>
@@ -62,7 +65,7 @@ const ChatRoomContainer = ({selectedChatRoom, handleChangeChatRoom, subscribeCha
                 </Modal>
             </Heading>
             <ChatRoomList>
-                {filteredChatRooms.map(chatRoom => (
+                {filteredChatRooms?.map(chatRoom => (
                     <ChatRoomItem key={chatRoom.chatRoomId}
                                   chatRoomId={chatRoom.chatRoomId}
                                   chatRoomName={chatRoom.chatRoomName}
@@ -70,6 +73,10 @@ const ChatRoomContainer = ({selectedChatRoom, handleChangeChatRoom, subscribeCha
                                   participantCount={chatRoom.participantCount}
                                   selectedChatRoom={selectedChatRoom}
                                   handleChangeChatRoom={handleChangeChatRoom}
+                                  setSelectedChatRoomData={setSelectedChatRoomData}
+                                  participantIds={chatRoom.participantIds}
+                                  handleSendMessage={handleSendMessage}
+                                  stompClientRef={stompClientRef}
                     />
                 ))}
             </ChatRoomList>

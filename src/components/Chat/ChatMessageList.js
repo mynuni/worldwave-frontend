@@ -1,41 +1,45 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import COLOR from "../../constants/color";
 import ChatMessageItem from "./ChatMessageItem";
 import {LoadingSpinner} from "../Explore/ExploreDetail";
+import COLOR from "../../constants/color";
 
 const ChatMessageList = ({
-                             selectedChatRoom,
+                             scrollRef,
                              isFetching,
                              isFetchingNextPage,
                              messages,
                              fetchNextPage,
                              hasNextPage,
                          }) => {
-    const scrollRef = useRef(null);
-    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const [currentScrollPosition, setCurrentScrollPosition] = useState(0);
 
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight - scrollPosition;
+
+        if (scrollRef.current && isFetchingNextPage) {
+            scrollRef.current.scrollTop = currentScrollPosition;
+            return;
         }
+
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }
+        }, 100);
+
     }, [messages]);
 
-    useEffect(() => {
-        if (scrollRef.current) {
-            setScrollPosition(0);
-        }
-    }, [selectedChatRoom]);
-
     const handleLoadPreviousClick = () => {
-        setScrollPosition(scrollRef.current);
+        setCurrentScrollPosition(scrollRef.current.scrollTop);
         fetchNextPage();
     };
+
+    if (isFetching) return <LoadingSpinner/>;
 
     return (
         <Container ref={scrollRef}>
             <MessageList>
-                {isFetching && <LoadingSpinner/>}
                 {hasNextPage &&
                     <LoadPreviousButton onClick={handleLoadPreviousClick}>
                         이전 채팅 불러오기
@@ -60,32 +64,32 @@ const ChatMessageList = ({
 export default ChatMessageList;
 
 const Container = styled.div`
-    flex: 1 1 400px;
-    overflow-y: auto;
-    height: calc(100% - 150px);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    padding: 0 12px;
+    max-height: calc(100% - 150px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+
+    }
+`;
+
+const LoadPreviousButton = styled.button`
+    display: block;
+    margin: 12px auto;
+    height: 40px;
+    padding: 6px 12px;
+    background: ${COLOR.GRAY_200};
+    color: ${COLOR.WHITE};
+    cursor: pointer;
 `;
 
 const MessageList = styled.div`
     width: 100%;
-    padding: 10px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-`;
-
-const LoadPreviousButton = styled.button`
-    margin: 0 auto;
-    height: 40px;
-    padding: 0 16px;
-    background: ${COLOR.GRAY_200};
-    color: white;
-    cursor: pointer;
-
-    &:hover {
-        background: ${COLOR.GRAY_300};
-    }
-
 `;
