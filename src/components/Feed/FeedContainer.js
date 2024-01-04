@@ -27,6 +27,7 @@ const FeedContainer = ({sort = ""}) => {
         {
             getNextPageParam: (lastPage) =>
                 lastPage?.last ? null : lastPage?.number + 1,
+            cacheTime: 0,
         }
     );
 

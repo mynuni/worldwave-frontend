@@ -21,14 +21,12 @@ const style = {
 const PostUpdateModal = ({postId, content, attachedFiles, editModalOpen, handleClose}) => {
     const [imagePreviews, setImagePreviews] = useState([]);
     const fileInputRef = useRef();
-
+    const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png"];
     const [newFiles, setNewFiles] = useState([]);
     const [newFileUrls, setNewFileUrls] = useState([]);
-
     const [oldFileUrls, setOldFileUrls] = useState([]);
     const [oldFileDeleteList, setOldFileDeleteList] = useState([]);
     const [updatedContent, setUpdatedContent] = useState(content);
-
     const [oldFiles, setOldFiles] = useState(attachedFiles);
 
     useEffect(() => {
@@ -45,10 +43,20 @@ const PostUpdateModal = ({postId, content, attachedFiles, editModalOpen, handleC
     const handleFileChange = (e) => {
         const files = e.target.files;
         const totalFiles = files.length + oldFiles.length + newFileUrls.length;
-        if (totalFiles > 5) {
-            alert("사진 첨부는 최대 5장까지 가능합니다.");
+        if (totalFiles > 3) {
+            alert("사진 첨부는 최대 3장까지 가능합니다.");
             return;
         }
+
+        // 확장자가 allowedFileTypes에 포함되어 있지 않으면 return
+        const selectedFilesArray = Array.from(files);
+        const validFiles = selectedFilesArray.filter(file => allowedFileTypes.includes(file.type));
+
+        if (validFiles.length !== selectedFilesArray.length) {
+            alert('jpg, jpeg, png 형식의 이미지만 첨부할 수 있습니다.');
+            return;
+        }
+
         setNewFiles((newFiles) => [...newFiles, ...Array.from(files)]);
         generatePreviewImages(files);
     };
@@ -103,7 +111,7 @@ const PostUpdateModal = ({postId, content, attachedFiles, editModalOpen, handleC
         });
 
         try {
-            await axios.patch("http://localhost:8080/api/posts/" + postId, formData, {
+            await axios.patch(process.env.REACT_APP_UPLOAD_FILE_BASE_URL + "/" + postId, formData, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("accessToken"),
                     "Content-Type": "multipart/form-data",
@@ -165,18 +173,18 @@ const PostUpdateModal = ({postId, content, attachedFiles, editModalOpen, handleC
 export default PostUpdateModal;
 
 const StyledEditButton = styled(Button)`
-  background-color: ${COLOR.BLUE};
-  color: ${COLOR.WHITE};
-  padding: 10px 20px;
-  width: 100%;
-  margin-top: 10px;
+    background-color: ${COLOR.BLUE};
+    color: ${COLOR.WHITE};
+    padding: 10px 20px;
+    width: 100%;
+    margin-top: 10px;
 
 `;
 
 const StyledFileAttachButton = styled(Button)`
-  background-color: ${COLOR.BLUE};
-  color: ${COLOR.WHITE};
-  width: 100%;
-  padding: 10px 20px;
-  margin-bottom: 10px;
+    background-color: ${COLOR.BLUE};
+    color: ${COLOR.WHITE};
+    width: 100%;
+    padding: 10px 20px;
+    margin-bottom: 10px;
 `;

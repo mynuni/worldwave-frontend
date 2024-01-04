@@ -78,13 +78,15 @@ const ImagePreviewContainer = styled.div`
 `;
 
 const ImagePreviewWrap = styled.div`
-  height: 400px;
-  width: auto;
-
-  img {
+    height: 400px;
     width: auto;
-    height: 100%;
-  }
+
+    img {
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+
+    }
 `;
 
 const ImageListContainer = styled.div`
@@ -110,8 +112,8 @@ const ImageWrap = styled.div`
   border: 1px solid ${COLOR.GRAY_200};
 
   img {
-    width: auto;
-    height: 100%;
+    width: 60px;
+    height: 60px;
   }
 
 `;

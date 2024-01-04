@@ -3,14 +3,13 @@ import styled from "styled-components";
 import PhotoSlider from "./PhotoSlider";
 import COLOR from "../../constants/color";
 import Text from "../common/Text/Text";
-import {AiFillLike, AiOutlineComment} from "react-icons/ai";
+import {AiFillLike} from "react-icons/ai";
 import {useMutation, useQueryClient} from "react-query";
 import {deletePost, toggleLike} from "../../apis/service/feed";
-import {FaRegComment, FaRegCommentDots} from "react-icons/fa";
+import {FaRegComment} from "react-icons/fa";
 import CommentModal from "./CommentModal";
 import {useRecoilValue} from "recoil";
 import {userState} from "../../recoil/user";
-import PostEditor from "./PostEditor";
 import PostUpdateModal from "./PostUpdateModal";
 import useTimeConvert from "../../hooks/useTimeConvert";
 import {BsDot} from "react-icons/bs";
@@ -45,16 +44,27 @@ const PostCard = ({
     const toggleLikeMutation = useMutation(
         () => toggleLike(id),
         {
-            onSuccess: (data) => {
-                setLikeStatus(data.alreadyLiked);
-                setLikeCount(data.likeCount);
-            }
+            onMutate: async () => {
+                const previousData = queryClient.getQueryData('likes');
+                const optimisticData = {
+                    alreadyLiked: !likeStatus,
+                    likeCount: likeStatus ? likeCount - 1 : likeCount + 1,
+                };
+                setLikeStatus(optimisticData.alreadyLiked);
+                setLikeCount(optimisticData.likeCount);
+                queryClient.setQueryData('likes', optimisticData);
+                return {previousData};
+            },
+            onError: (err, variables, context) => {
+                queryClient.setQueryData('likes', context.previousData);
+            },
         }
     );
 
     const handleToggleLike = () => {
         toggleLikeMutation.mutate(id);
-    }
+    };
+
 
     const deletePostMutation = useMutation(
         () => deletePost(id),
@@ -97,7 +107,7 @@ const PostCard = ({
                     </PostControlBox>
                 }
             </TitleWrap>
-            <PhotoSlider attachedFiles={attachedFiles} />
+            <PhotoSlider attachedFiles={attachedFiles}/>
             <StatisticsContainer>
                 <StatisticsItem onClick={handleToggleLike}>
                     <StyledLikeIcon isLiked={likeStatus}/>
@@ -129,89 +139,89 @@ const PostCard = ({
 export default PostCard;
 
 const Container = styled.div`
-  width: 500px;
-  border: 1px solid ${COLOR.GRAY_200};
-  border-radius: 4px;
+    width: 500px;
+    border: 1px solid ${COLOR.GRAY_200};
+    border-radius: 4px;
 `;
 
 const TitleWrap = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 4px;
-  border-bottom: 1px solid ${COLOR.GRAY_200};
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-bottom: 1px solid ${COLOR.GRAY_200};
 `;
 
 const ProfileImageWrap = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
 
-  & > img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 1px solid ${COLOR.GRAY_200};
-  }
+    & > img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px solid ${COLOR.GRAY_200};
+    }
 `;
 
 const AuthorNickname = styled.span`
-  font-weight: bold;
-  margin-right: 6px;
+    font-weight: bold;
+    margin-right: 6px;
 `;
 
 const ContentContainer = styled.div`
-  padding: 12px;
-  white-space: pre-line;
+    padding: 12px;
+    white-space: pre-line;
 `;
 
 const StatisticsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 12px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
 `;
 
 const StatisticsItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 12px;
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
 `;
 
 const CommentContainer = styled.div`
-  display: inline-block;
-  margin: 12px;
-  cursor: pointer;
-  color: ${COLOR.GRAY_400};
+    display: inline-block;
+    margin: 12px;
+    cursor: pointer;
+    color: ${COLOR.GRAY_400};
 `;
 
 export const StyledLikeIcon = styled(AiFillLike)`
-  font-size: 22px;
-  margin-right: 4px;
-  padding-bottom: 2px;
-  cursor: pointer;
-  color: ${props => (props.isLiked ? COLOR.BLUE : COLOR.GRAY_300)};
+    font-size: 22px;
+    margin-right: 4px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    color: ${props => (props.isLiked ? COLOR.BLUE : COLOR.GRAY_300)};
 `;
 
 export const StyledCommentIcon = styled(FaRegComment)`
-  font-size: 22px;
-  color: ${COLOR.GRAY_400};
-  margin-right: 4px;
-  padding-bottom: 2px;
-  cursor: pointer;
+    font-size: 22px;
+    color: ${COLOR.GRAY_400};
+    margin-right: 4px;
+    padding-bottom: 2px;
+    cursor: pointer;
 `;
 
 const PostControlBox = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 10px;
-  color: ${COLOR.GRAY_400};
-  font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 10px;
+    color: ${COLOR.GRAY_400};
+    font-size: 14px;
 
-  & > span {
-    margin-left: 10px;
-    cursor: pointer;
-  }
+    & > span {
+        margin-left: 10px;
+        cursor: pointer;
+    }
 `;

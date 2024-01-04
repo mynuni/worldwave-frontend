@@ -71,7 +71,7 @@ const PostEditor = ({open, onClose}) => {
             });
 
             try {
-                const response = await axios.post("http://localhost:8080/api/posts", formData, {
+                const response = await axios.post(process.env.REACT_APP_UPLOAD_FILE_BASE_URL, formData, {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("accessToken"),
                         "Content-Type": "multipart/form-data",

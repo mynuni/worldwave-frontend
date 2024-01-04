@@ -34,10 +34,7 @@ const CommentCard = ({
             onSuccess: () => {
                 setEditMode(false);
                 refetch();
-            },
-            onError: (error) => {
-                console.log(error);
-            },
+            }
         }
     );
 
