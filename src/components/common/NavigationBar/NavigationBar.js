@@ -41,6 +41,7 @@ const NavigationBar = () => {
                 <NavMenu to={CLIENT_PATHS.EXPLORE}>EXPLORE</NavMenu>
                 <NavMenu to={CLIENT_PATHS.FEED}>FEEDS</NavMenu>
                 <NavMenu to={CLIENT_PATHS.PEOPLE}>PEOPLE</NavMenu>
+                <NavMenu to={CLIENT_PATHS.TALK}>TALK</NavMenu>
                 <DropdownContainer ref={dropdownRef}>
                     <DropDownButton
                         src={process.env.REACT_APP_STATIC_IMAGES_BASE_URL + user?.profileImgPath}

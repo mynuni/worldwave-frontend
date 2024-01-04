@@ -44,6 +44,18 @@ const NotificationBoard = ({memberId}) => {
                         refetchNotification={refetchNotification}
                     />
                 ))}
+                {data?.length === 0 && (
+                    <div style={{
+                        height: "200px",
+                        padding: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: COLOR.GRAY_400
+                    }}>
+                        최근 알림이 없습니다.
+                    </div>
+                )}
             </ActivityContainer>
 
         </Container>
@@ -53,7 +65,7 @@ const NotificationBoard = ({memberId}) => {
 export default NotificationBoard;
 
 const Container = styled.div`
-  width: 500px;
+    width: 500px;
 `;
 
 const ActivityContainer = styled.div`
